@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Grade Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .box {
+            background: white;
+            width: 320px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px #aaa;
+            text-align: center;
+        }
+
+        h2 {
+            color: #4f46e5;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 7px;
+            border: 1px solid #bbb;
+            border-radius: 8px;
+        }
+
+        button {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 11px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #3730a3;
+        }
+
+        #result {
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>🎓 Grade Calculator</h2>
+
+    <input type="number" id="m1" placeholder="Subject 1 Marks">
+    <input type="number" id="m2" placeholder="Subject 2 Marks">
+    <input type="number" id="m3" placeholder="Subject 3 Marks">
+    <input type="number" id="m4" placeholder="Subject 4 Marks">
+    <input type="number" id="m5" placeholder="Subject 5 Marks">
+
+    <button onclick="calculate()">Calculate Result</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function calculate() {
+
+    let marks = [
+        Number(document.getElementById("m1").value),
+        Number(document.getElementById("m2").value),
+        Number(document.getElementById("m3").value),
+        Number(document.getElementById("m4").value),
+        Number(document.getElementById("m5").value)
+    ];
+
+    if (marks.some(mark => mark < 0 || mark > 100)) {
+        document.getElementById("result").innerHTML =
+            "⚠️ Enter marks between 0 and 100.";
+        return;
+    }
+
+    let total = marks.reduce((sum, mark) => sum + mark, 0);
+    let percentage = total / marks.length;
+
+    let grade;
+
+    if (percentage >= 90)
+        grade = "A+";
+    else if (percentage >= 80)
+        grade = "A";
+    else if (percentage >= 70)
+        grade = "B";
+    else if (percentage >= 60)
+        grade = "C";
+    else if (percentage >= 50)
+        grade = "D";
+    else
+        grade = "F";
+
+    document.getElementById("result").innerHTML = `
+        <b>Total:</b> ${total} / 500 <br>
+        <b>Percentage:</b> ${percentage.toFixed(2)}% <br>
+        <b>Grade:</b> ${grade}
+    `;
+}
+</script>
+
+</body>
+</html>
