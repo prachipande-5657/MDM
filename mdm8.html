@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Admission Portal - Student Registration</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 550px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        h2 {
+            text-align: center;
+            color: #1a365d;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #2d3748;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3182ce;
+            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+        }
+        /* Error message styling */
+        .error-message {
+            color: #e53e3e;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none;
+        }
+        .form-group.error input {
+            border-color: #e53e3e;
+        }
+        .form-group.error .error-message {
+            display: block;
+        }
+        /* Success message styling */
+        #success-alert {
+            background-color: #c6f6d5;
+            color: #22543d;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        button[type="submit"] {
+            width: 100%;
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        button[type="submit"]:hover {
+            background-color: #2b6cb0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>College Admission Portal</h2>
+        
+        <div id="success-alert">Registration form submitted successfully! Redirecting...</div>
+
+        <form id="registrationForm" novalidate>
+            <!-- Full Name -->
+            <div class="form-group" id="group-fullname">
+                <label for="fullname">Full Name *</label>
+                <input type="text" id="fullname" placeholder="Enter your full name">
+                <div class="error-message">Full name is required.</div>
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group" id="group-email">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" placeholder="e.g., student@example.com">
+                <div class="error-message">Please enter a valid email address.</div>
+            </div>
+
+            <!-- Mobile Number -->
+            <div class="form-group" id="group-mobile">
+                <label for="mobile">Mobile Number *</label>
+                <input type="tel" id="mobile" maxlength="10" placeholder="10-digit mobile number">
+                <div class="error-message">Please enter a valid 10-digit mobile number.</div>
+            </div>
+
+            <!-- Course Selection -->
+            <div class="form-group" id="group-course">
+                <label for="course">Select Course *</label>
+                <select id="course">
+                    <option value="">-- Choose a Course --</option>
+                    <option value="btech">B.Tech (Computer Science & Engineering)</option>
+                    <option value="bca">Bachelor of Computer Applications (BCA)</option>
+                    <option value="bba">Bachelor of Business Administration (BBA)</option>
+                    <option value="bsc">B.Sc. (Data Science)</option>
+                </select>
+                <div class="error-message">Please select a course.</div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group" id="group-password">
+                <label for="password">Password *</label>
+                <input type="password" id="password" placeholder="At least 6 characters long">
+                <div class="error-message">Password must be at least 6 characters long.</div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Submit Application</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const successAlert = document.getElementById('success-alert');
+
+        // Helper function to show error on a field
+        function setError(fieldId, message) {
+            const group = document.getElementById('group-' + fieldId);
+            group.classList.add('error');
+            if (message) {
+                group.querySelector('.error-message').textContent = message;
+            }
+        }
+
+        // Helper function to clear error on a field
+        function clearError(fieldId) {
+            const group = document.getElementById('group-' + fieldId);
+            group.classList.remove('error');
+        }
+
+        // Regex for standard email validation
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        // Regex for 10-digit mobile number validation
+        function isValidMobile(mobile) {
+            return /^[0-9]{10}$/.test(mobile);
+        }
+
+        // Form submission event listener
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default submission to run checks
+
+            let isValid = true;
+
+            // 1. Validate Full Name (Mandatory)
+            const fullname = document.getElementById('fullname').value.trim();
+            if (fullname === '') {
+                setError('fullname', 'Full name is required.');
+                isValid = false;
+            } else {
+                clearError('fullname');
+            }
+
+            // 2. Validate Email Format (Mandatory & Format check)
+            const email = document.getElementById('email').value.trim();
+            if (email === '') {
+                setError('email', 'Email address is required.');
+                isValid = false;
+            } else if (!isValidEmail(email)) {
+                setError('email', 'Please enter a valid email format.');
+                isValid = false;
+            } else {
+                clearError('email');
+            }
+
+            // 3. Validate Mobile Number (Mandatory & 10-digit check)
+            const mobile = document.getElementById('mobile').value.trim();
+            if (mobile === '') {
+                setError('mobile', 'Mobile number is required.');
+                isValid = false;
+            } else if (!isValidMobile(mobile)) {
+                setError('mobile', 'Mobile number must be exactly 10 digits.');
+                isValid = false;
+            } else {
+                clearError('mobile');
+            }
+
+            // 4. Validate Course Selection (Mandatory)
+            const course = document.getElementById('course').value;
+            if (course === '') {
+                setError('course', 'Please select a course.');
+                isValid = false;
+            } else {
+                clearError('course');
+            }
+
+            // 5. Validate Password (Mandatory & Minimum length 6)
+            const password = document.getElementById('password').value;
+            if (password === '') {
+                setError('password', 'Password is required.');
+                isValid = false;
+            } else if (password.length < 6) {
+                setError('password', 'Password must be at least 6 characters long.');
+                isValid = false;
+            } else {
+                clearError('password');
+            }
+
+            // Final check
+            if (isValid) {
+                successAlert.style.display = 'block';
+                form.reset();
+                
+                // Hide success message after 4 seconds
+                setTimeout(() => {
+                    successAlert.style.display = 'none';
+                }, 4000);
+            } else {
+                successAlert.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>
