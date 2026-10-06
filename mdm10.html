@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Study & Skill Tracker Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen font-sans">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-indigo-700 p-2 rounded-xl">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-wide">Study & Skill Dashboard</h1>
+                    <p class="text-xs text-indigo-200">Track your academic progress and daily focus</p>
+                </div>
+            </div>
+            <!-- Quick Stats Pills -->
+            <div class="flex gap-4 text-sm bg-indigo-700/60 px-4 py-2 rounded-xl backdrop-blur-xs">
+                <div>Courses: <span id="stat-courses" class="font-bold">0</span></div>
+                <div class="border-l border-indigo-400/40 pl-4">Completed: <span id="stat-completed" class="font-bold">0</span></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Left 2 Columns: Course & Skill Tracker -->
+        <section class="lg:col-span-2 space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-xs border border-slate-100">
+                <h2 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                    </svg>
+                    Active Courses & Certifications
+                </h2>
+
+                <!-- Add Course Form -->
+                <form id="course-form" class="flex flex-col sm:flex-row gap-3 mb-6">
+                    <input 
+                        type="text" 
+                        id="course-input" 
+                        placeholder="Enter course name (e.g., Python, Data Structures)..." 
+                        class="flex-1 px-4 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        autocomplete="off"
+                    >
+                    <select id="course-category" class="px-4 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white">
+                        <option value="Programming">Programming</option>
+                        <option value="Certification">Certification</option>
+                        <option value="Academic">Academic</option>
+                    </select>
+                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition cursor-pointer shadow-xs">
+                        Add Course
+                    </button>
+                </form>
+
+                <!-- Course List Container -->
+                <div id="course-list" class="space-y-3">
+                    <!-- Dynamic courses will render here -->
+                </div>
+                <div id="empty-courses" class="text-center py-8 text-slate-400 text-sm hidden">
+                    No courses added yet. Start by adding your current subjects above!
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Column: Pomodoro Focus Timer -->
+        <aside class="space-y-6">
+            <div class="bg-white p-6 rounded-2xl shadow-xs border border-slate-100 text-center">
+                <h2 class="text-lg font-bold text-slate-800 mb-2 flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Focus Timer
+                </h2>
+                <p class="text-xs text-slate-500 mb-6">Boost study productivity with 25-minute intervals</p>
+
+                <!-- Timer Display -->
+                <div id="timer-display" class="text-5xl font-extrabold text-indigo-600 mb-6 tracking-wider">
+                    25:00
+                </div>
+
+                <!-- Timer Controls -->
+                <div class="flex justify-center gap-3">
+                    <button id="timer-start" onclick="startTimer()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer">Start</button>
+                    <button id="timer-pause" onclick="pauseTimer()" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer">Pause</button>
+                    <button id="timer-reset" onclick="resetTimer()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2 rounded-xl text-sm font-semibold transition cursor-pointer">Reset</button>
+                </div>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- State & LocalStorage Management ---
+        let courses = JSON.parse(localStorage.getItem('student_dashboard_courses')) || [
+            { id: 1, name: 'The Joy of Computing using Python', category: 'Programming', completed: true },
+            { id: 2, name: 'Privacy and Security in Online Social Media', category: 'Certification', completed: false }
+        ];
+
+        // --- Course Tracker Logic ---
+        const courseForm = document.getElementById('course-form');
+        const courseInput = document.getElementById('course-input');
+        const courseCategory = document.getElementById('course-category');
+        const courseList = document.getElementById('course-list');
+        const emptyCourses = document.getElementById('empty-courses');
+        const statCourses = document.getElementById('stat-courses');
+        const statCompleted = document.getElementById('stat-completed');
+
+        function saveAndRenderCourses() {
+            localStorage.setItem('student_dashboard_courses', JSON.stringify(courses));
+            renderCourses();
+        }
+
+        courseForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = courseInput.value.trim();
+            if (!name) return;
+
+            const newCourse = {
+                id: Date.now(),
+                name: name,
+                category: courseCategory.value,
+                completed: false
+            };
+
+            courses.unshift(newCourse);
+            courseInput.value = '';
+            saveAndRenderCourses();
+        });
+
+        function toggleCourse(id) {
+            courses = courses.map(c => c.id === id ? { ...c, completed: !c.completed } : c);
+            saveAndRenderCourses();
+        }
+
+        function deleteCourse(id) {
+            courses = courses.filter(c => c.id !== id);
+            saveAndRenderCourses();
+        }
+
+        function renderCourses() {
+            courseList.innerHTML = '';
+            
+            if (courses.length === 0) {
+                emptyCourses.classList.remove('hidden');
+            } else {
+                emptyCourses.classList.add('hidden');
+            }
+
+            courses.forEach(c => {
+                const item = document.createElement('div');
+                item.className = `flex items-center justify-between p-4 rounded-xl border transition ${c.completed ? 'bg-slate-50 border-slate-200 opacity-75' : 'bg-white border-slate-100 shadow-2xs'}`;
+                
+                item.innerHTML = `
+                    <div class="flex items-center gap-3 overflow-hidden cursor-pointer flex-1" onclick="toggleCourse(${c.id})">
+                        <input type="checkbox" ${c.completed ? 'checked' : ''} class="w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500 cursor-pointer">
+                        <div>
+                            <p class="text-sm font-semibold truncate ${c.completed ? 'line-through text-slate-400' : 'text-slate-800'}">${escapeHtml(c.name)}</p>
+                            <span class="text-xs text-indigo-600 font-medium bg-indigo-50 px-2 py-0.5 rounded-md">${c.category}</span>
+                        </div>
+                    </div>
+                    <button onclick="deleteCourse(${c.id})" class="text-slate-400 hover:text-red-500 p-2 rounded-lg transition cursor-pointer" title="Delete course">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                    </button>
+                `;
+                courseList.appendChild(item);
+            });
+
+            // Update stats
+            statCourses.textContent = courses.length;
+            statCompleted.textContent = courses.filter(c => c.completed).length;
+        }
+
+        // --- Pomodoro Timer Logic ---
+        let timeLeft = 25 * 60;
+        let timerId = null;
+        const timerDisplay = document.getElementById('timer-display');
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (timerId !== null) return;
+            timerId = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    clearInterval(timerId);
+                    timerId = null;
+                    alert('Focus session completed! Take a short break.');
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            clearInterval(timerId);
+            timerId = null;
+        }
+
+        function resetTimer() {
+            clearInterval(timerId);
+            timerId = null;
+            timeLeft = 25 * 60;
+            updateTimerDisplay();
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        // Initial setup
+        renderCourses();
+        updateTimerDisplay();
+    </script>
+</body>
+</html>
