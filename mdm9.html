@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Personal To-Do List</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-slate-50 min-h-screen py-10 px-4 text-slate-800">
+
+    <div class="max-w-md mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-100">
+        <!-- Header -->
+        <div class="bg-indigo-600 px-6 py-6 text-white text-center">
+            <h1 class="text-2xl font-bold tracking-wide">My Academic & Personal Tasks</h1>
+            <p class="text-indigo-200 text-sm mt-1">Organize your daily goals seamlessly</p>
+        </div>
+
+        <!-- Task Input Form -->
+        <div class="p-6">
+            <form id="task-form" class="flex gap-2 mb-6">
+                <input 
+                    type="text" 
+                    id="task-input" 
+                    placeholder="Add a new task (e.g., Study Python, Submit Assignment)..." 
+                    class="flex-1 px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                    autocomplete="off"
+                >
+                <button 
+                    type="submit" 
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-3 rounded-xl transition duration-200 text-sm shadow-sm cursor-pointer"
+                >
+                    Add
+                </button>
+            </form>
+
+            <!-- Filter Buttons -->
+            <div class="flex justify-between items-center mb-4 text-xs font-medium text-slate-500 border-b border-slate-100 pb-3">
+                <div class="flex gap-1.5">
+                    <button onclick="setFilter('all')" id="filter-all" class="px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-600 font-semibold transition">All</button>
+                    <button onclick="setFilter('active')" id="filter-active" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 transition">Active</button>
+                    <button onclick="setFilter('completed')" id="filter-completed" class="px-3 py-1.5 rounded-lg hover:bg-slate-100 transition">Completed</button>
+                </div>
+                <span id="task-count">0 tasks left</span>
+            </div>
+
+            <!-- Task List Container -->
+            <ul id="task-list" class="space-y-3 max-h-72 overflow-y-auto pr-1">
+                <!-- Dynamic tasks will populate here -->
+            </ul>
+
+            <!-- Empty State Message -->
+            <div id="empty-state" class="text-center py-8 text-slate-400 text-sm hidden">
+                <p>No tasks found. Enjoy your free time!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // State Management
+        let tasks = JSON.parse(localStorage.getItem('student_tasks')) || [];
+        let currentFilter = 'all';
+
+        const taskForm = document.getElementById('task-form');
+        const taskInput = document.getElementById('task-input');
+        const taskList = document.getElementById('task-list');
+        const taskCount = document.getElementById('task-count');
+        const emptyState = document.getElementById('empty-state
