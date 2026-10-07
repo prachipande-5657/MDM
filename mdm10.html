@@ -3,92 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Ultimate Student Survival & Grind Dashboard 🚀</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Prachi Pande[CM25100] 📊</title>
+    <style>
+        /* Pure CSS Fallback to ensure it never goes blank offline */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #020617; color: #f8fafc; min-height: 100vh; padding-bottom: 50px; }
+        header { background-color: #0f172a; border-bottom: 1px solid #1e293b; position: sticky; top: 0; z-index: 50; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { background: linear-gradient(135deg, #10b981, #2dd4bf); padding: 10px; border-radius: 14px; color: #020617; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+        .stats-box { background-color: #020617; border: 1px solid #1e293b; padding: 12px 20px; border-radius: 14px; display: flex; gap: 20px; align-items: center; }
+        .main-grid { display: grid; grid-template-columns: 1fr; gap: 25px; margin-top: 30px; }
+        @media (min-width: 768px) { .main-grid { grid-template-columns: 1fr 1.5fr; } }
+        .card { background-color: #0f172a; border: 1px solid #1e293b; padding: 24px; border-radius: 20px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3); }
+        h2 { font-size: 18px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; color: #e2e8f0; }
+        label { display: block; font-size: 12px; font-weight: 600; color: #94a3b8; margin-bottom: 6px; text-transform: uppercase; }
+        input, select { width: 100%; padding: 10px 14px; background-color: #020617; border: 1px solid #1e293b; border-radius: 10px; color: #f8fafc; font-size: 14px; margin-bottom: 15px; outline: none; }
+        input:focus, select:focus { border-color: #10b981; }
+        .btn-primary { width: 100%; background: linear-gradient(135deg, #10b981, #14b8a6); color: #020617; font-weight: 800; padding: 12px; border: none; border-radius: 10px; cursor: pointer; font-size: 14px; transition: opacity 0.2s; }
+        .btn-primary:hover { opacity: 0.9; }
+        .btn-secondary { width: 100%; background-color: #1e293b; color: #34d399; font-weight: 700; padding: 10px; border: 1px solid #334155; border-radius: 10px; cursor: pointer; font-size: 13px; }
+        .btn-secondary:hover { background-color: #334155; }
+        .sem-box { background-color: #020617; border: 1px solid #1e293b; border-radius: 14px; padding: 16px; margin-bottom: 15px; }
+        .sub-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #0f172a; font-size: 14px; }
+        .delete-btn { background: none; border: none; color: #ef4444; cursor: pointer; font-size: 16px; padding: 4px 8px; }
+        .delete-btn:hover { color: #f87171; }
+        .text-emerald { color: #34d399; font-weight: 800; }
+        .flex-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .empty-text { text-align: center; color: #64748b; padding: 30px; font-size: 14px; }
+        .reset-link { background: none; border: 1px solid rgba(239, 68, 68, 0.3); color: #f87171; padding: 6px 12px; border-radius: 8px; font-size: 12px; cursor: pointer; }
+        .reset-link:hover { background-color: rgba(239, 68, 68, 0.1); }
+    </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen font-sans selection:bg-indigo-500 selection:text-white">
+<body>
 
-    <!-- Top Navigation Bar -->
-    <header class="bg-slate-800 border-b border-slate-700 shadow-lg">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="bg-indigo-600 p-2.5 rounded-2xl shadow-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                </div>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo-area">
+                <div class="logo-icon">📊</div>
                 <div>
-                    <h1 class="text-xl font-black tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-500">
-                        Student Survival Dashboard 💀✨
-                    </h1>
-                    <p class="text-xs text-slate-400">For surviving NPTEL quizzes, 3 AM code bugs, and deadlines</p>
+                    <h1 style="font-size: 18px; font-weight: 900; color: #34d399;">SemScore 🎯</h1>
+                    <p style="font-size: 11px; color: #94a3b8;">CGPA Tracker & Goal Simulator</p>
                 </div>
             </div>
-            <!-- Quick Stats Pills -->
-            <div class="flex gap-4 text-sm bg-slate-900/80 border border-slate-700 px-5 py-2.5 rounded-2xl shadow-inner">
-                <div>Active Grinds: <span id="stat-courses" class="font-bold text-indigo-400">0</span></div>
-                <div class="border-l border-slate-700 pl-4">Actually Finished: <span id="stat-completed" class="font-bold text-emerald-400">0</span></div>
+            <div class="stats-box">
+                <div>
+                    <p style="font-size: 10px; color: #94a3b8; font-weight: 700;">OVERALL CGPA</p>
+                    <p id="overall-cgpa" class="text-emerald" style="font-size: 20px;">0.00</p>
+                </div>
+                <div style="border-left: 1px solid #1e293b; padding-left: 15px;">
+                    <p style="font-size: 10px; color: #94a3b8; font-weight: 700;">TOTAL CREDITS</p>
+                    <p id="total-credits" style="font-size: 18px; font-weight: bold; color: #f8fafc;">0</p>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content Grid -->
-    <main class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- Main Container -->
+    <div class="container main-grid">
         
-        <!-- Left 2 Columns: Course & Skill Tracker -->
-        <section class="lg:col-span-2 space-y-6">
-            <div class="bg-slate-800 border border-slate-700 p-6 rounded-3xl shadow-xl">
-                <h2 class="text-lg font-bold text-slate-200 mb-4 flex items-center gap-2">
-                    <span class="text-xl">📚</span> Subjects, Certifications & Chaos
-                </h2>
-
-                <!-- Add Course Form -->
-                <form id="course-form" class="flex flex-col sm:flex-row gap-3 mb-6">
-                    <input 
-                        type="text" 
-                        id="course-input" 
-                        placeholder="e.g., Python, Data Structures, or 'Crying over Assignment'..." 
-                        class="flex-1 px-4 py-3 bg-slate-900 border border-slate-700 rounded-2xl text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        autocomplete="off"
-                    >
-                    <select id="course-category" class="px-4 py-3 bg-slate-900 border border-slate-700 rounded-2xl text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <option value="Programming">💻 Coding</option>
-                        <option value="Certification">📜 Certificate</option>
-                        <option value="Academic">🏫 College Subject</option>
+        <!-- Left Column -->
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            <!-- Form Card -->
+            <div class="card">
+                <h2>✍️ Add Subject Grade</h2>
+                <form id="subject-form">
+                    <label>Semester</label>
+                    <select id="sem-select">
+                        <option value="1">Semester 1</option>
+                        <option value="2">Semester 2</option>
+                        <option value="3">Semester 3</option>
+                        <option value="4">Semester 4</option>
+                        <option value="5">Semester 5</option>
+                        <option value="6">Semester 6</option>
+                        <option value="7">Semester 7</option>
+                        <option value="8">Semester 8</option>
                     </select>
-                    <button type="submit" class="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold px-6 py-3 rounded-2xl text-sm transition cursor-pointer shadow-lg shadow-indigo-600/20">
-                        Add Task
-                    </button>
+
+                    <label>Subject Name</label>
+                    <input type="text" id="sub-name" placeholder="e.g., Data Structures" required autocomplete="off">
+
+                    <div class="flex-row">
+                        <div>
+                            <label>Credits</label>
+                            <input type="number" id="sub-credits" min="1" max="6" value="3" required>
+                        </div>
+                        <div>
+                            <label>Grade Point (10-pt)</label>
+                            <input type="number" id="sub-grade" min="0" max="10" value="10" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Add Subject</button>
                 </form>
-
-                <!-- Course List Container -->
-                <div id="course-list" class="space-y-3">
-                    <!-- Dynamic courses will render here -->
-                </div>
-                <div id="empty-courses" class="text-center py-10 text-slate-500 text-sm hidden">
-                    No grind items found. Are you even a student, or are you just raw-dogging semester exams? 😭
-                </div>
             </div>
-        </section>
 
-        <!-- Right Column: Focus Timer -->
-        <aside class="space-y-6">
-            <div class="bg-slate-800 border border-slate-700 p-6 rounded-3xl shadow-xl text-center relative overflow-hidden">
-                <div class="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none"></div>
-                
-                <h2 class="text-lg font-bold text-slate-200 mb-1 flex items-center justify-center gap-2">
-                    <span>⏱️</span> Panic Focus Timer
-                </h2>
-                <p class="text-xs text-slate-400 mb-6">25 minutes of fake productivity before getting distracted</p>
+            <!-- Target Predictor Card -->
+            <div class="card">
+                <h2>🎯 Target SGPA Predictor</h2>
+                <p style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">Find out what SGPA you need next sem.</p>
+                <input type="number" id="target-cgpa" step="0.01" max="10" placeholder="Dream CGPA (e.g., 9.0)">
+                <button type="button" onclick="calculateTarget()" class="btn-secondary">Calculate Required SGPA</button>
+                <div id="target-result" style="font-size: 12px; text-align: center; margin-top: 10px;"></div>
+            </div>
+        </div>
 
-                <!-- Timer Display -->
-                <div id="timer-display" class="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-pink-400 mb-6 tracking-wider">
-                    25:00
-                </div>
+        <!-- Right Column -->
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2>📚 Semester Breakdown</h2>
+                <button onclick="clearAllData()" class="reset-link">Reset All</button>
+            </div>
 
-                <!-- Timer Controls -->
-                <div class="flex justify-center gap-3">
-                    <button id="timer-start" onclick="startTimer()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-2xl text-sm font-bold transition cursor-pointer shadow-lg shadow-emerald-600/20">Start Grind</button>
-                    <button id="timer-pause" onclick="pauseTimer()" class="bg-amber-600 hover:bg-amber-500 text-white px-5 py-2.5 rounded-2xl text-sm font-bold transition cursor-pointer shadow-lg shadow-amber-600/20">Chill</button>
-                    <button id="timer-reset" onclick="resetTimer()" class="bg-slate-700 hover:bg-slate-600 text
+            <div id="semesters-container"></div>
+            <div id="empty-state" class="empty-text">No subjects added yet. Fill out the form on the left! 🚀</div>
+        </div>
+
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        let data = JSON.parse(localStorage.getItem('semscore_data')) || {};
+
+        const form = document.getElementById('subject-form');
+        const semSelect = document.getElementById('sem-select');
+        const subName = document.getElementById('sub-name');
+        const subCredits = document.getElementById('sub-credits');
+        const subGrade = document.getElementById('sub-grade');
+        const semestersContainer = document.getElementById('semesters-container');
+        const emptyState = document.getElementById('empty-state');
+        const overallCgpaEl = document.getElementById('overall-cgpa');
+        const totalCreditsEl = document.getElementById('total-credits');
+
+        function saveData() {
+            localStorage.setItem('semscore_data', JSON.stringify(data));
+            render();
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const sem = semSelect.value;
+            const name = subName.value.trim();
+            const credits = parseFloat(subCredits.value);
+            const grade = parseFloat(subGrade.value);
+
+            if (!name || isNaN(credits) || isNaN(grade)) return;
+
+            if (!data[sem]) data[sem] = [];
+            data[sem].push({ id: Date.now(), name, credits, grade });
+
+            subName.value = '';
+            saveData();
+        });
+
+        window.deleteSubject = function(sem, id) {
+            data[sem] = data[sem].filter(sub => sub.id !== id);
+            if (data[sem].length === 0) delete data[sem];
+            saveData();
+        }
+
+        window.clearAllData = function() {
+            if (confirm('Clear all data?')) {
+                data = {};
+                saveData();
+            }
+        }
+
+        window.calculateTarget = function() {
+            const target = parseFloat(document.getElementById('target-cgpa').value);
+            const resultEl = document.getElementById('target-result');
+
+            if (isNaN(target)) {
+                resultEl.textContent = 'Please enter a valid target CGPA.';
+                resultEl.style.color = '#ef4444';
+                return;
+            }
+
+            let totalPoints = 0, totalCreds = 0;
+            Object.keys(data).forEach(sem => {
+                data[sem].forEach(sub => {
+                    totalPoints += sub.credits * sub.grade;
+                    totalCreds += sub.credits;
+                });
+            });
+
+            if (totalCreds === 0) {
+                resultEl.textContent = 'Add at least one semester first!';
+                resultEl.style.color = '#f59e0b';
+                return;
+            }
+
+            const req = ((target * (totalCreds + 20)) - totalPoints) / 20;
+            if (req > 10) {
+                resultEl.textContent = `⚠️ Requires ${req.toFixed(2)} SGPA (Nearly Impossible).`;
+                resultEl.style.color = '#ef4444';
+            } else {
+                resultEl.textContent = `💡 You need ${req.toFixed(2)} SGPA in your next 20-credit semester.`;
+                resultEl.style.color = '#34d399';
+            }
+        }
+
+        function render() {
+            semestersContainer.innerHTML = '';
+            const semesters = Object.keys(data).sort((a, b) => a - b);
+
+            if (semesters.length === 0) {
+                emptyState.style.display = 'block';
+                overallCgpaEl.textContent = '0.00';
+                totalCreditsEl.textContent = '0';
+                return;
+            }
+            emptyState.style.display = 'none';
+
+            let gPoints = 0, gCreds = 0;
+
+            semesters.forEach(sem => {
+                const subs = data[sem];
+                let sPoints = 0, sCreds = 0;
+
+                subs.forEach(sub => {
+                    sPoints += sub.credits * sub.grade;
+                    sCreds += sub.credits;
+                });
+
+                gPoints += sPoints;
+                gCreds += sCreds;
+                const sgpa = sCreds > 0 ? (sPoints / sCreds).toFixed(2) : '0.00';
+
+                let subsHtml = '';
+                subs.forEach(sub => {
+                    subsHtml += `
+                        <div class="sub-row">
+                            <div>
+                                <strong>${sub.name}</strong> 
+                                <span style="color: #64748b; font-size: 12px;">(${sub.credits} Cr, Grade: ${sub.grade})</span>
+                            </div>
+                            <button class="delete-btn" onclick="deleteSubject('${sem}', ${sub.id})">×</button>
+                        </div>
+                    `;
+                });
+
+                const box = document.createElement('div');
+                box.className = 'sem-box';
+                box.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <strong style="color: #e2e8f0;">Semester ${sem}</strong>
+                        <span style="background: rgba(52, 211, 153, 0.1); color: #34d399; padding: 2px 8px; border-radius: 6px; font-size: 12px;">SGPA: ${sgpa}</span>
+                    </div>
+                    ${subsHtml}
+                `;
+                semestersContainer.appendChild(box);
+            });
+
+            overallCgpaEl.textContent = gCreds > 0 ? (gPoints / gCreds).toFixed(2) : '0.00';
+            totalCreditsEl.textContent = gCreds;
+        }
+
+        render();
+    </script>
+</body>
+</html>
